@@ -7,10 +7,11 @@
 
 package com.example.springbootstarter.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -20,9 +21,6 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pId;
     private String name;
-    private int age;
-    private long phone;
-    private String spouse;
 
     @Override
     public String toString() {
@@ -32,8 +30,42 @@ public class Person {
                 ", age=" + age +
                 ", phone=" + phone +
                 ", spouse='" + spouse + '\'' +
+                ", address=" + address +
                 '}';
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    private int age;
+    private long phone;
+    private String spouse;
+
+    public Person(String name, int age, long phone, String spouse, Address address) {
+        this.name = name;
+        this.age = age;
+        this.phone = phone;
+        this.spouse = spouse;
+        this.address = address;
+    }
+
+    public Person(int pId, String name, int age, long phone, String spouse, Address address) {
+        this.pId = pId;
+        this.name = name;
+        this.age = age;
+        this.phone = phone;
+        this.spouse = spouse;
+        this.address = address;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Address address;
 
     @Override
     public boolean equals(Object o) {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Period;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
@@ -30,7 +31,7 @@ public class PersonService {
         personRepository.deleteById(id);
     }
 
-    public Person read(int id){
+    public Person read(int id)  {
         Optional<Person> byId = personRepository.findById(id);
         Person person = byId.get();
         return person;
